@@ -4,6 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 class FlutterYoutube {
+
+  static int _parseColorToHex(Color color){
+    return int.parse("0xFF"+color.value.toRadixString(16).padLeft(8, '0'));
+  }
+
   static const MethodChannel _channel =
       const MethodChannel('PonnamKarthik/flutter_youtube');
 
@@ -58,8 +63,8 @@ class FlutterYoutube {
       'id': id,
       'autoPlay': autoPlay,
       'fullScreen': fullScreen,
-      'appBarColor': parseColorToHex(appBarColor),
-      'backgroundColor': parseColorToHex(backgroundColor),
+      'appBarColor': _parseColorToHex(appBarColor),
+      'backgroundColor': _parseColorToHex(backgroundColor),
     };
     _channel.invokeMethod('playYoutubeVideo', params);
   }
@@ -85,8 +90,8 @@ class FlutterYoutube {
       'id': videoId,
       'autoPlay': autoPlay,
       'fullScreen': fullScreen,
-      'appBarColor': parseColorToHex(appBarColor),
-      'backgroundColor': parseColorToHex(backgroundColor),
+      'appBarColor': _parseColorToHex(appBarColor),
+      'backgroundColor': _parseColorToHex(backgroundColor),
     };
     _channel.invokeMethod('playYoutubeVideo', params);
   }
@@ -96,10 +101,6 @@ class FlutterYoutube {
   Stream<String> get onVideoEnded {
     var d = _stream.receiveBroadcastStream().map<String>((element) => element);
     return d;
-  }
-
-  int parseColorToHex(Color color){
-    return int.parse("0xFF"+color.value.toRadixString(16).padLeft(8, '0'));
   }
 
 }
