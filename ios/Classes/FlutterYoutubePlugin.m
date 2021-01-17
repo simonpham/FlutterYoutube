@@ -1,6 +1,7 @@
 #import <XCDYouTubeKit/XCDYouTubeKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
+#import <UIKit/UIKit.h>
 #import "FlutterYoutubePlugin.h"
 
 static NSString *const PLATFORM_CHANNEL = @"PonnamKarthik/flutter_youtube";
@@ -68,6 +69,8 @@ static NSString *const PLATFORM_CHANNEL = @"PonnamKarthik/flutter_youtube";
 
 + (void) moviePlayerPlaybackDidFinish:(NSNotification *)notification
 {
+    [[UIDevice currentDevice] setValue:@(UIInterfaceOrientationLandscapeLeft) forKey:@"orientation"];
+    [UINavigationController attemptRotationToDeviceOrientation];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:notification.object];
     MPMovieFinishReason finishReason = [notification.userInfo[MPMoviePlayerPlaybackDidFinishReasonUserInfoKey] integerValue];
     if (finishReason == MPMovieFinishReasonPlaybackError)
